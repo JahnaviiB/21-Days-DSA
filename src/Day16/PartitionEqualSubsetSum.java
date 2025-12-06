@@ -1,0 +1,32 @@
+package Day16;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+
+public class PartitionEqualSubsetSum {
+    public static boolean equalsubset(int[] nums){
+        if(nums == null || nums.length == 0) return false;
+        int total = 0;
+        for(int num : nums){
+            total += num;
+        }
+        if(total % 2 != 0) return false;
+        int target = total / 2;
+        boolean[] dp = new boolean[target+1];
+        dp[0] = true;
+
+        for(int num : nums){
+            for(int s = target; s >= num;s--){
+                if(dp[s-num]){
+                    dp[s] = true;
+                }
+            }
+        }
+        return dp[target];
+    }
+    public static void main(String[] args){
+        int[] input = {1,5,11,5};
+        boolean result = equalsubset(input);
+        System.out.println(result);
+    }
+}
